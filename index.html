@@ -1,26 +1,26 @@
 <!DOCTYPE html>
-<html lang=«uk»>
+<html lang="uk">
 <head>
-<meta charset=«utf-8»>
-<meta name=«viewport» content=«width=device-width, initial-scale=1»>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Для тебе</title>
-<link rel=«preconnect» href=«https://fonts.googleapis.com»>
-<link rel=«preconnect» href=«https://fonts.gstatic.com» crossorigin>
-<link href=«https://fonts.googleapis.com/css2?family=Caveat:wght@500&family=Cormorant+Garamond:ital,wght@0,500;1,500&family=Manrope:wght@400;500&display=swap» rel=«stylesheet»>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500&family=Cormorant+Garamond:ital,wght@0,500;1,500&family=Manrope:wght@400;500&display=swap" rel="stylesheet">
 <style>
-:root{—paper:#f5f2ec;—ink:#1d1d1b;—muted:#8d877d;—line:#e3ded4;—accent:#1f4a38}
+:root{--paper:#f5f2ec;--ink:#1d1d1b;--muted:#8d877d;--line:#e3ded4;--accent:#1f4a38}
 *{box-sizing:border-box;margin:0;padding:0}
 html{-webkit-text-size-adjust:100%}
-body{background:var(—paper);color:var(—ink);font:400 16px/1.7 ‚Manrope‘,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+body{background:var(--paper);color:var(--ink);font:400 16px/1.7 'Manrope',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
 a{color:inherit;text-decoration:none}
 .wrap{max-width:1040px;margin:0 auto;padding:0 24px}
 
-.hero{padding:96px 0 72px;border-bottom:1px solid var(—line)}
-.dates,.num{font-size:12px;letter-spacing:.14em;color:var(—muted)}
+.hero{padding:96px 0 72px;border-bottom:1px solid var(--line)}
+.dates,.num{font-size:12px;letter-spacing:.14em;color:var(--muted)}
 .hero-row{display:flex;gap:40px;align-items:flex-end;flex-wrap:wrap;margin-top:24px}
-.big{font:500 clamp(120px,22vw,220px)/.78 ‚Cormorant Garamond‘,serif;color:var(—accent);letter-spacing:-.04em}
+.big{font:500 clamp(120px,22vw,220px)/.78 'Cormorant Garamond',serif;color:var(--accent);letter-spacing:-.04em}
 .hero-text{flex:1;min-width:260px;max-width:470px}
-h1{font:500 clamp(30px,4vw,44px)/1.1 ‚Cormorant Garamond‘,serif}
+h1{font:500 clamp(30px,4vw,44px)/1.1 'Cormorant Garamond',serif}
 .intro{margin-top:16px;font-size:15px;color:#4a4740;white-space:pre-line}
 
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:56px 40px;padding:80px 0 100px}
@@ -28,44 +28,41 @@ h1{font:500 clamp(30px,4vw,44px)/1.1 ‚Cormorant Garamond‘,serif}
 .card:hover{transform:translateY(-4px) rotate(0)!important}
 .ph{background:#e8e4dc;overflow:hidden;aspect-ratio:4/5}
 .ph img{display:block;width:100%;height:100%;object-fit:cover}
-.cap{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:14px 4px 18px;font:500 22px/1.15 ‚Caveat‘,cursive}
-.cap span{font:500 11px ‚Manrope‘,sans-serif;letter-spacing:.12em;color:var(—muted)}
+.cap{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:14px 4px 18px;font:500 22px/1.15 'Caveat',cursive}
+.cap span{font:500 11px 'Manrope',sans-serif;letter-spacing:.12em;color:var(--muted)}
 
-.letter{max-width:560px;margin:0 auto;padding-top:64px;border-top:1px solid var(—line)}
-.letter p{font:italic 500 21px/1.65 ‚Cormorant Garamond‘,serif;white-space:pre-line}
-.sign{font:500 28px ‚Caveat‘,cursive;margin-top:28px}
+.letter{max-width:560px;margin:0 auto;padding-top:64px;border-top:1px solid var(--line)}
+.letter p{font:italic 500 21px/1.65 'Cormorant Garamond',serif;white-space:pre-line}
+.sign{font:500 28px 'Caveat',cursive;margin-top:28px}
 
 .lock{max-width:300px;margin:120px auto 150px}
-.field{width:100%;padding:16px 18px;border:1px solid var(—ink);border-radius:0;background:transparent;color:var(—ink);font:500 13px ‚Manrope‘,sans-serif;letter-spacing:.2em;text-align:center;outline:none;-webkit-appearance:none}
-.field::placeholder{color:var(—muted)}
+.field{width:100%;padding:16px 18px;border:1px solid var(--ink);border-radius:0;background:transparent;color:var(--ink);font:500 13px 'Manrope',sans-serif;letter-spacing:.2em;text-align:center;outline:none;-webkit-appearance:none}
+.field::placeholder{color:var(--muted)}
 .shake{animation:sh .4s}
 @keyframes sh{20%,60%{transform:translateX(-6px)}40%,80%{transform:translateX(6px)}}
 
-.back{display:inline-block;margin-top:40px;font-size:13px;color:var(—muted)}
+.back{display:inline-block;margin-top:40px;font-size:13px;color:var(--muted)}
 .page{max-width:680px;margin:0 auto;padding:48px 0 100px}
-.page h2{font:500 clamp(36px,6vw,56px)/1.05 ‚Cormorant Garamond‘,serif;margin:12px 0 40px}
+.page h2{font:500 clamp(36px,6vw,56px)/1.05 'Cormorant Garamond',serif;margin:12px 0 40px}
 .cover{background:#fff;padding:12px;box-shadow:0 1px 2px rgba(0,0,0,.06),0 10px 28px rgba(0,0,0,.05)}
 .cover .ph{aspect-ratio:auto;min-height:220px}
 .cover .ph img{height:auto}
-.verse{margin-top:56px;padding-left:22px;border-left:1px solid var(—line);font:italic 500 20px/1.75 ‚Cormorant Garamond‘,serif;white-space:pre-line}
+.verse{margin-top:56px;padding-left:22px;border-left:1px solid var(--line);font:italic 500 20px/1.75 'Cormorant Garamond',serif;white-space:pre-line}
 .note{margin-top:48px;color:#3a3832;white-space:pre-line}
 .more{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:16px;margin-top:56px}
 .more .ph{aspect-ratio:1}
-.pager{display:flex;justify-content:space-between;gap:24px;margin-top:80px;padding-top:24px;border-top:1px solid var(—line);font-size:13px;color:var(—muted)}
+.pager{display:flex;justify-content:space-between;gap:24px;margin-top:80px;padding-top:24px;border-top:1px solid var(--line);font-size:13px;color:var(--muted)}
 
 .video{aspect-ratio:16/9;background:#111;margin-top:8px}
 .video iframe{width:100%;height:100%;border:0;display:block}
 .page.wide{max-width:900px}
 
 .setup{display:grid;gap:14px;margin-top:8px}
-.setup button{padding:16px;border:0;background:var(—ink);color:var(—paper);font:500 13px ‚Manrope‘,sans-serif;letter-spacing:.12em;cursor:pointer}
+.setup button{padding:16px;border:0;background:var(--ink);color:var(--paper);font:500 13px 'Manrope',sans-serif;letter-spacing:.12em;cursor:pointer}
 .setup textarea{min-height:110px;letter-spacing:0;text-align:left;font-size:12px}
 
 .err{padding:40px 24px;font:14px/1.6 monospace;color:#a33}
-.fade{animation:fd .
-
-
-6s ease}
+.fade{animation:fd .6s ease}
 @keyframes fd{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 
 @media(max-width:600px){
@@ -80,33 +77,33 @@ h1{font:500 clamp(30px,4vw,44px)/1.1 ‚Cormorant Garamond‘,serif}
 </style>
 </head>
 <body>
-<div id=«app»></div>
+<div id="app"></div>
 
 <script>
 /* показує помилку на сторінці замість білого екрана */
-window.addEventListener(‚error‘, function (e) {
-  document.getElementById(‚app‘).innerHTML =
-    ‚<p class=«err»>Помилка в рядку ‚ + e.lineno + ‚:<br>‘ + e.message + ‚</p>‘;
+window.addEventListener('error', function (e) {
+  document.getElementById('app').innerHTML =
+    '<p class="err">Помилка в рядку ' + e.lineno + ':<br>' + e.message + '</p>';
 });
 </script>
 
 <script>
 /* ============ ТЕКСТИ САЙТУ ============
-   Усі тексти — у зворотних лапках  
+   Усі тексти — у зворотних лапках ` `
    Всередині можна писати апострофи і переносити рядки.
    Не використовуй сам символ ` усередині тексту.
 */
 const SITE = {
-  dates: 14.02.2025 — 14.02.2026,
-  bigNumber: 20,
-  title: Двадцять віршів, які я написав для тебе,
+  dates: `14.02.2025 — 14.02.2026`,
+  bigNumber: `20`,
+  title: `Двадцять віршів, які я написав для тебе`,
   intro: `Кожен із них — про якийсь наш момент.
 Натисни на фото, щоб прочитати, звідки він узявся.`,
   letter: `Тут твій останній лист.
 
 Можна писати скільки завгодно рядків — переноси збережуться.`,
-  signature: твій Влад,
-  giftTitle: Ще одне,
+  signature: `твій Влад`,
+  giftTitle: `Ще одне`,
   videoCipher: ``   // вставити рядок зі сторінки #/setup
 };
 
@@ -115,84 +112,82 @@ const SITE = {
    poem   — сам вірш (можна залишити порожнім ``)
    note   — твоє пояснення
    photos — додаткові фото внизу сторінки (можна [])
-   Між блоками { ... } обов’язково кома.
+   Між блоками { ... } обов'язково кома.
 */
 const POEMS = [
   {
-    title: Назва першого вірша,
-    cover: photos/01.jpg,
+    title: `Назва першого вірша`,
+    cover: `photos/01.jpg`,
     poem: ``,
-    note: Пояснення, як народився цей вірш.,
-    photos: [`photos/01-1.jpg`, photos/01-2.jpg, `photos/01-3.jpg`]
+    note: `Пояснення, як народився цей вірш.`,
+    photos: [`photos/01-1.jpg`, `photos/01-2.jpg`, `photos/01-3.jpg`]
   },
   {
-    title: Назва другого,
-    cover: photos/02.jpg,
+    title: `Назва другого`,
+    cover: `photos/02.jpg`,
     poem: ``,
-    note: Пояснення.,
+    note: `Пояснення.`,
     photos: [`photos/02-1.jpg`]
   },
   {
-    title: Назва третього,
-    cover: photos/03.jpg,
+    title: `Назва третього`,
+    cover: `photos/03.jpg`,
     poem: ``,
-    note: Пояснення.,
+    note: `Пояснення.`,
     photos: []
   }
 ];
 
 /* ============ ДАЛІ НІЧОГО МІНЯТИ НЕ ТРЕБА ============ */
-const app = document.getElementById(‚app‘);
+const app = document.getElementById('app');
 const rot = [-1.2, .8, -.5, 1.1, -.9, .6, -.3, 1];
-const esc = s => String(s ?? ‚‘).replace(/[&<>»]/g, c => ({‚&‘:‘&amp;‘,‘<‚:‘&lt;‘,‘>‘:‘&gt;‘,‘»‘:‘&quot;‘}[c]));
-const pad = n => String(n).padStart(2, ‚0‘);
-const img = (src, alt = ‚‘) => <div class=«ph»><img src=«${esc(src)}» alt=«${esc(alt)}» loading=«lazy» onerror=«this.style.opacity=0»></div>;
+const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const pad = n => String(n).padStart(2, '0');
+const img = (src, alt = '') => `<div class="ph"><img src="${esc(src)}" alt="${esc(alt)}" loading="lazy" onerror="this.style.opacity=0"></div>`;
 
-let view = ‚‘, homeY = 0;
+let view = '', homeY = 0;
 let unlocked = null;
-try { unlocked = sessionStorage.getItem(‚v‘); } catch (e) {}
+try { unlocked = sessionStorage.getItem('v'); } catch (e) {}
 
 function home() {
   app.innerHTML = `
-  <header class=«hero wrap fade»>
-    <div class=«dates»>${esc(SITE.dates)}</div>
-    <div class=«hero-row»>
-      <div class=«big»>${esc(SITE.bigNumber)}</div>
-      <div class=«hero-text»><h1>${esc(SITE.title)}</h1><p class=«intro»>${esc(SITE.intro)}</p></div>
+  <header class="hero wrap fade">
+    <div class="dates">${esc(SITE.dates)}</div>
+    <div class="hero-row">
+      <div class="big">${esc(SITE.bigNumber)}</div>
+      <div class="hero-text"><h1>${esc(SITE.title)}</h1><p class="intro">${esc(SITE.intro)}</p></div>
     </div>
   </header>
-  <main class=«wrap»>
-    <section class=«grid»>
+  <main class="wrap">
+    <section class="grid">
       ${POEMS.map((p, i) => `
-        <a class=«card» href=«#/${i + 1}» style=«transform:rotate(${rot[i % rot.length]}deg)»>
+        <a class="card" href="#/${i + 1}" style="transform:rotate(${rot[i % rot.length]}deg)">
           ${img(p.cover, p.title)}
-          <div class=«cap»>${esc(p.title)}<span>${pad(i + 1)}</span></div>
-        </a>`).join(‚‘)}
+          <div class="cap">${esc(p.title)}<span>${pad(i + 1)}</span></div>
+        </a>`).join('')}
     </section>
-    ${SITE.letter ? <section class=«letter»><p>${esc(SITE.letter)}</p><div class=«sign»>${esc(SITE.signature)}</div></section> : ‚‘}
-    <form class=«lock» id=«lock» autocomplete=«off»>
-      <input class=«field» id=«code» placeholder=«ввести код» enterkeyhint=«go» autocapitalize=«off» spellcheck=«false»>
+    ${SITE.letter ? `<section class="letter"><p>${esc(SITE.letter)}</p><div class="sign">${esc(SITE.signature)}</div></section>` : ''}
+    <form class="lock" id="lock" autocomplete="off">
+      <input class="field" id="code" placeholder="ввести код" enterkeyhint="go" autocapitalize="off" spellcheck="false">
     </form>
   </main>`;
 
-  const input = document.getElementById(‚code‘);
-  document.getElementById(‚lock‘).onsubmit = async ev => {
+  const input = document.getElementById('code');
+  document.getElementById('lock').onsubmit = async ev => {
     ev.preventDefault();
     const v = input.value.trim();
     if (!v) return;
     try {
       unlocked = await decrypt(SITE.videoCipher, v);
-      try { sessionStorage.setItem(‚v‘, unlocked); } catch (e) {}
+      try { sessionStorage.setItem('v', unlocked); } catch (e) {}
       input.blur();
-      location.hash = ‚#/dlya-tebe‘;
+      location.hash = '#/dlya-tebe';
     } catch (err) {
-      input.value = ‚‘;
-      input.classList.remove(‚shake‘); void input.offsetWidth; input.classList.add(‚shake‘);
+      input.value = '';
+      input.classList.remove('shake'); void input.offsetWidth; input.classList.add('shake');
     }
   };
-
-
-requestAnimationFrame(() => scrollTo(0, homeY));
+  requestAnimationFrame(() => scrollTo(0, homeY));
 }
 
 function poem(i) {
@@ -200,18 +195,18 @@ function poem(i) {
   if (!p) return home();
   const prev = POEMS[i - 1], next = POEMS[i + 1];
   app.innerHTML = `
-  <div class=«wrap»>
-    <a class=«back» href=«#/«>← усі вірші</a>
-    <article class=«page fade»>
-      <div class=«num»>${pad(i + 1)} / ${pad(POEMS.length)}</div>
+  <div class="wrap">
+    <a class="back" href="#/">← усі вірші</a>
+    <article class="page fade">
+      <div class="num">${pad(i + 1)} / ${pad(POEMS.length)}</div>
       <h2>${esc(p.title)}</h2>
-      <div class=«cover»>${img(p.cover, p.title)}</div>
-      ${p.poem ? <div class=«verse»>${esc(p.poem)}</div> : ‚‘}
-      ${p.note ? <div class=«note»>${esc(p.note)}</div> : ‚‘}
-      ${p.photos && p.photos.length ? <div class=«more»>${p.photos.map(s => img(s)).join(‚‘)}</div> : ‚‘}
-      <nav class=«pager»>
-        ${prev ? <a href=«#/${i}»>← ${esc(prev.title)}</a> : ‚<span></span>‘}
-        ${next ? <a href=«#/${i + 2}»>${esc(next.title)} →</a> : ‚<a href=«#/«>на головну</a>‘}
+      <div class="cover">${img(p.cover, p.title)}</div>
+      ${p.poem ? `<div class="verse">${esc(p.poem)}</div>` : ''}
+      ${p.note ? `<div class="note">${esc(p.note)}</div>` : ''}
+      ${p.photos && p.photos.length ? `<div class="more">${p.photos.map(s => img(s)).join('')}</div>` : ''}
+      <nav class="pager">
+        ${prev ? `<a href="#/${i}">← ${esc(prev.title)}</a>` : '<span></span>'}
+        ${next ? `<a href="#/${i + 2}">${esc(next.title)} →</a>` : '<a href="#/">на головну</a>'}
       </nav>
     </article>
   </div>`;
@@ -219,18 +214,18 @@ function poem(i) {
 }
 
 function gift() {
-  if (!unlocked) { location.hash = ‚#/‚; return; }
+  if (!unlocked) { location.hash = '#/'; return; }
   app.innerHTML = `
-  <div class=«wrap»>
-    <a class=«back» href=«#/«>← назад</a>
-    <section class=«page wide fade»>
-      <div class=«num»>для тебе</div>
+  <div class="wrap">
+    <a class="back" href="#/">← назад</a>
+    <section class="page wide fade">
+      <div class="num">для тебе</div>
       <h2>${esc(SITE.giftTitle)}</h2>
-      <div class=«video»>
-        <iframe src=«https://www.youtube-nocookie.com/embed/${esc(unlocked)}?rel=0&playsinline=1»
-          allow=«autoplay; encrypted-media; picture-in-picture; fullscreen» allowfullscreen></iframe>
+      <div class="video">
+        <iframe src="https://www.youtube-nocookie.com/embed/${esc(unlocked)}?rel=0&playsinline=1"
+          allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>
       </div>
-      <a class=«back» href=«https://youtu.be/${esc(unlocked)}» target=«_blank» rel=«noopener»>відкрити на YouTube</a>
+      <a class="back" href="https://youtu.be/${esc(unlocked)}" target="_blank" rel="noopener">відкрити на YouTube</a>
     </section>
   </div>`;
   scrollTo(0, 0);
@@ -238,31 +233,31 @@ function gift() {
 
 function setup() {
   app.innerHTML = `
-  <div class=«wrap»>
-    <section class=«page fade»>
-      <div class=«num»>налаштування</div>
+  <div class="wrap">
+    <section class="page fade">
+      <div class="num">налаштування</div>
       <h2>Код і відео</h2>
-      <form class=«setup» id=«sf»>
-        <input class=«field» id=«sc» placeholder=«код (наприклад 227)»>
-        <input class=«field» id=«sl» placeholder=«посилання на YouTube»>
+      <form class="setup" id="sf">
+        <input class="field" id="sc" placeholder="код (наприклад 227)">
+        <input class="field" id="sl" placeholder="посилання на YouTube">
         <button>Згенерувати</button>
-        <textarea class=«field» id=«out» readonly placeholder=«тут з’явиться рядок для videoCipher»></textarea>
+        <textarea class="field" id="out" readonly placeholder="тут з’явиться рядок для videoCipher"></textarea>
       </form>
     </section>
   </div>`;
-  document.getElementById(‚sf‘).onsubmit = async ev => {
+  document.getElementById('sf').onsubmit = async ev => {
     ev.preventDefault();
-    const code = document.getElementById(‚sc‘).value.trim();
-    const id = ytId(document.getElementById(‚sl‘).value);
-    const out = document.getElementById(‚out‘);
-    if (!code || !id) { out.value = ‚Перевір код і посилання.‘; return; }
+    const code = document.getElementById('sc').value.trim();
+    const id = ytId(document.getElementById('sl').value);
+    const out = document.getElementById('out');
+    if (!code || !id) { out.value = 'Перевір код і посилання.'; return; }
     out.value = await encrypt(id, code);
     out.select();
   };
 }
 
 function ytId(link) {
-  const s = (link || ‚‘).trim();
+  const s = (link || '').trim();
   const m = s.match(/(?:v=|youtu\.be\/|embed\/|shorts\/|live\/)([\w-]{11})/);
   return m ? m[1] : (/^[\w-]{11}$/.test(s) ? s : null);
 }
@@ -271,33 +266,31 @@ const te = new TextEncoder(), td = new TextDecoder();
 const b64 = u => btoa(String.fromCharCode(...u));
 const unb64 = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
 async function keyFrom(code, salt) {
-  const base = await crypto.subtle.importKey(‚raw‘, te.encode(code), ‚PBKDF2‘, false, [‚deriveKey‘]);
-  return crypto.subtle.deriveKey({ name: ‚PBKDF2‘, salt, iterations: 250000, hash: ‚SHA-256‘ },
-    base, { name: ‚AES-GCM‘, length: 256 }, false, [‚encrypt‘, ‚decrypt‘]);
+  const base = await crypto.subtle.importKey('raw', te.encode(code), 'PBKDF2', false, ['deriveKey']);
+  return crypto.subtle.deriveKey({ name: 'PBKDF2', salt, iterations: 250000, hash: 'SHA-256' },
+    base, { name: 'AES-GCM', length: 256 }, false, ['encrypt', 'decrypt']);
 }
 async function encrypt(text, code) {
   const salt = crypto.getRandomValues(new Uint8Array(16));
   const iv = crypto.getRandomValues(new Uint8Array(12));
-  const ct = new Uint8Array(await crypto.subtle.encrypt({ name: ‚AES-GCM‘, iv }, await keyFrom(code, salt), te.encode(text)));
+  const ct = new Uint8Array(await crypto.subtle.encrypt({ name: 'AES-GCM', iv }, await keyFrom(code, salt), te.encode(text)));
   return b64(new Uint8Array([...salt, ...iv, ...ct]));
 }
 async function decrypt(data, code) {
   const u = unb64(data);
-  const pt = await crypto.subtle.decrypt({ name: ‚AES-GCM‘, iv: u.slice(16, 28) }, await keyFrom(code, u.slice(0, 16)), u.slice(28));
+  const pt = await crypto.subtle.decrypt({ name: 'AES-GCM', iv: u.slice(16, 28) }, await keyFrom(code, u.slice(0, 16)), u.slice(28));
   return td.decode(pt);
 }
 
 function route() {
-  const h = location.hash.replace(/^#\/?/, ‚‘);
-  if (view === ‚home‘) homeY = scrollY;
-  if (h === ‚setup‘) { view = ‚setup‘; setup(); }
-  else if (h === ‚dlya-tebe‘) { view = ‚gift‘; gift(); }
-  else if (/^\d+$/.test(h)) { view = ‚poem‘; poem(+h - 1); }
-  else { view = ‚home‘; home(); }
+  const h = location.hash.replace(/^#\/?/, '');
+  if (view === 'home') homeY = scrollY;
+  if (h === 'setup') { view = 'setup'; setup(); }
+  else if (h === 'dlya-tebe') { view = 'gift'; gift(); }
+  else if (/^\d+$/.test(h)) { view = 'poem'; poem(+h - 1); }
+  else { view = 'home'; home(); }
 }
-
-
-addEventListener(‚hashchange‘, route);
+addEventListener('hashchange', route);
 route();
 </script>
 </body>
