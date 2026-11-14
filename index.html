@@ -15,7 +15,6 @@ body{background:var(—paper);color:var(—ink);font:400 16px/1.7 ‚Manrope‘,
 a{color:inherit;text-decoration:none}
 .wrap{max-width:1040px;margin:0 auto;padding:0 24px}
 
-/* головна */
 .hero{padding:96px 0 72px;border-bottom:1px solid var(—line)}
 .dates,.num{font-size:12px;letter-spacing:.14em;color:var(—muted)}
 .hero-row{display:flex;gap:40px;align-items:flex-end;flex-wrap:wrap;margin-top:24px}
@@ -42,7 +41,6 @@ h1{font:500 clamp(30px,4vw,44px)/1.1 ‚Cormorant Garamond‘,serif}
 .shake{animation:sh .4s}
 @keyframes sh{20%,60%{transform:translateX(-6px)}40%,80%{transform:translateX(6px)}}
 
-/* сторінка вірша */
 .back{display:inline-block;margin-top:40px;font-size:13px;color:var(—muted)}
 .page{max-width:680px;margin:0 auto;padding:48px 0 100px}
 .page h2{font:500 clamp(36px,6vw,56px)/1.05 ‚Cormorant Garamond‘,serif;margin:12px 0 40px}
@@ -55,19 +53,19 @@ h1{font:500 clamp(30px,4vw,44px)/1.1 ‚Cormorant Garamond‘,serif}
 .more .ph{aspect-ratio:1}
 .pager{display:flex;justify-content:space-between;gap:24px;margin-top:80px;padding-top:24px;border-top:1px solid var(—line);font-size:13px;color:var(—muted)}
 
-/* подарунок */
 .video{aspect-ratio:16/9;background:#111;margin-top:8px}
 .video iframe{width:100%;height:100%;border:0;display:block}
 .page.wide{max-width:900px}
 
-/* налаштування */
 .setup{display:grid;gap:14px;margin-top:8px}
 .setup button{padding:16px;border:0;background:var(—ink);color:var(—paper);font:500 13px ‚Manrope‘,sans-serif;letter-spacing:.12em;cursor:pointer}
 .setup textarea{min-height:110px;letter-spacing:0;text-align:left;font-size:12px}
 
-.
+.err{padding:40px 24px;font:14px/1.6 monospace;color:#a33}
+.fade{animation:fd .
 
-  fade{animation:fd .6s ease}
+
+6s ease}
 @keyframes fd{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 
 @media(max-width:600px){
@@ -85,47 +83,62 @@ h1{font:500 clamp(30px,4vw,44px)/1.1 ‚Cormorant Garamond‘,serif}
 <div id=«app»></div>
 
 <script>
-/* ============ ТЕКСТИ САЙТУ ============ */
+/* показує помилку на сторінці замість білого екрана */
+window.addEventListener(‚error‘, function (e) {
+  document.getElementById(‚app‘).innerHTML =
+    ‚<p class=«err»>Помилка в рядку ‚ + e.lineno + ‚:<br>‘ + e.message + ‚</p>‘;
+});
+</script>
+
+<script>
+/* ============ ТЕКСТИ САЙТУ ============
+   Усі тексти — у зворотних лапках  
+   Всередині можна писати апострофи і переносити рядки.
+   Не використовуй сам символ ` усередині тексту.
+*/
 const SITE = {
-  dates: ‚14.02.2025 — 14.02.2026‘,
-  bigNumber: ‚20‘,
-  title: ‚Двадцять віршів, які я написав для тебе‘,
-  intro: ‚Кожен із них — про якийсь наш момент.\nНатисни на фото, щоб прочитати, звідки він узявся.‘,
-  letter: ‚Тут твій останній лист.\n\nМожна писати скільки завгодно рядків — переноси збережуться.‘,
-  signature: ‚твій Влад‘,
-  giftTitle: ‚Ще одне‘,
-  videoCipher: ‚‘   // вставити рядок зі сторінки #/setup
+  dates: 14.02.2025 — 14.02.2026,
+  bigNumber: 20,
+  title: Двадцять віршів, які я написав для тебе,
+  intro: `Кожен із них — про якийсь наш момент.
+Натисни на фото, щоб прочитати, звідки він узявся.`,
+  letter: `Тут твій останній лист.
+
+Можна писати скільки завгодно рядків — переноси збережуться.`,
+  signature: твій Влад,
+  giftTitle: Ще одне,
+  videoCipher: ``   // вставити рядок зі сторінки #/setup
 };
 
 /* ============ ВІРШІ ============
    cover  — фото на головній і вгорі сторінки вірша
-   poem   — сам вірш (можна залишити порожнім ‚‘)
+   poem   — сам вірш (можна залишити порожнім ``)
    note   — твоє пояснення
    photos — додаткові фото внизу сторінки (можна [])
+   Між блоками { ... } обов’язково кома.
 */
 const POEMS = [
   {
-    title: ‚Назва першого вірша‘,
-    cover: ‚photos/01.jpg‘,
-    poem: ‚‘,
-    note: ‚Пояснення, як народився цей вірш.‘,
-    photos: [‚photos/01-1.jpg‘, ‚photos/01-2.jpg‘, ‚photos/01-3.jpg‘]
+    title: Назва першого вірша,
+    cover: photos/01.jpg,
+    poem: ``,
+    note: Пояснення, як народився цей вірш.,
+    photos: [`photos/01-1.jpg`, photos/01-2.jpg, `photos/01-3.jpg`]
   },
   {
-    title: ‚Назва другого‘,
-    cover: ‚photos/02.jpg‘,
-    poem: ‚‘,
-    note: ‚Пояснення.‘,
-    photos: [‚photos/02-1.jpg‘]
+    title: Назва другого,
+    cover: photos/02.jpg,
+    poem: ``,
+    note: Пояснення.,
+    photos: [`photos/02-1.jpg`]
   },
   {
-    title: ‚Назва третього‘,
-    cover: ‚photos/03.jpg‘,
-    poem: ‚‘,
-    note: ‚Пояснення.‘,
+    title: Назва третього,
+    cover: photos/03.jpg,
+    poem: ``,
+    note: Пояснення.,
     photos: []
   }
-  // копіюй блок { ... }, ставлячи кому між ними
 ];
 
 /* ============ ДАЛІ НІЧОГО МІНЯТИ НЕ ТРЕБА ============ */
@@ -163,8 +176,8 @@ function home() {
   </main>`;
 
   const input = document.getElementById(‚code‘);
-  document.getElementById(‚lock‘).onsubmit = async e => {
-    e.preventDefault();
+  document.getElementById(‚lock‘).onsubmit = async ev => {
+    ev.preventDefault();
     const v = input.value.trim();
     if (!v) return;
     try {
@@ -177,7 +190,9 @@ function home() {
       input.classList.remove(‚shake‘); void input.offsetWidth; input.classList.add(‚shake‘);
     }
   };
-  requestAnimationFrame(() => scrollTo(0, homeY));
+
+
+requestAnimationFrame(() => scrollTo(0, homeY));
 }
 
 function poem(i) {
@@ -188,9 +203,7 @@ function poem(i) {
   <div class=«wrap»>
     <a class=«back» href=«#/«>← усі вірші</a>
     <article class=«page fade»>
-      <div class=«num»>${pad(i + 1)} / ${pad(POEMS.
-
-                                             length)}</div>
+      <div class=«num»>${pad(i + 1)} / ${pad(POEMS.length)}</div>
       <h2>${esc(p.title)}</h2>
       <div class=«cover»>${img(p.cover, p.title)}</div>
       ${p.poem ? <div class=«verse»>${esc(p.poem)}</div> : ‚‘}
@@ -237,8 +250,8 @@ function setup() {
       </form>
     </section>
   </div>`;
-  document.getElementById(‚sf‘).onsubmit = async e => {
-    e.preventDefault();
+  document.getElementById(‚sf‘).onsubmit = async ev => {
+    ev.preventDefault();
     const code = document.getElementById(‚sc‘).value.trim();
     const id = ytId(document.getElementById(‚sl‘).value);
     const out = document.getElementById(‚out‘);
@@ -254,7 +267,6 @@ function ytId(link) {
   return m ? m[1] : (/^[\w-]{11}$/.test(s) ? s : null);
 }
 
-/* шифрування посилання кодом */
 const te = new TextEncoder(), td = new TextDecoder();
 const b64 = u => btoa(String.fromCharCode(...u));
 const unb64 = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
@@ -275,7 +287,6 @@ async function decrypt(data, code) {
   return td.decode(pt);
 }
 
-/* навігація */
 function route() {
   const h = location.hash.replace(/^#\/?/, ‚‘);
   if (view === ‚home‘) homeY = scrollY;
@@ -284,9 +295,10 @@ function route() {
   else if (/^\d+$/.test(h)) { view = ‚poem‘; poem(+h - 1); }
   else { view = ‚home‘; home(); }
 }
+
+
 addEventListener(‚hashchange‘, route);
 route();
 </script>
 </body>
 </html>
-
