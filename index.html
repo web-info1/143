@@ -366,7 +366,7 @@ function home() {
 
   const eq = document.getElementById('eq');
   const ins = ['na', 'nb', 'nc'].map(id => document.getElementById(id));
-  ins.forEach(el => el.oninput = () => { el.value = el.value.replace(/\D/g, ''); });
+  ins.forEach(el => el.oninput = () => { el.value = el.value.replace(/\D/g, ''); eq.classList.remove('shake'); });
   document.getElementById('lock').onsubmit = async ev => {
     ev.preventDefault();
     const [a, b, c] = ins.map(el => parseInt(el.value, 10));
