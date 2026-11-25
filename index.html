@@ -40,7 +40,19 @@ h1{font:500 clamp(28px,4vw,40px)/1.15 'Cormorant Garamond',serif}
 .letter p{font:italic 500 21px/1.65 'Cormorant Garamond',serif;white-space:pre-line}
 .sign{font:500 28px 'Caveat',cursive;margin-top:28px}
 
-.lock{max-width:300px;margin:120px auto 150px}
+.lock{max-width:440px;margin:120px auto 150px;text-align:center}
+.eq{display:flex;align-items:center;justify-content:center;gap:10px}
+.eq .field{width:96px;padding:16px 6px;font-size:20px;letter-spacing:.04em}
+.eq b{font:500 30px 'Cormorant Garamond',serif;color:var(--muted)}
+.eq.shake .field{border-color:#a33}
+.go{margin-top:22px;padding:14px 30px;border:0;background:var(--ink);color:var(--paper);font:500 12px 'Manrope',sans-serif;letter-spacing:.16em;cursor:pointer}
+.win{position:fixed;inset:0;z-index:10;display:flex;align-items:center;justify-content:center;padding:24px;background:rgba(29,29,27,.45);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);animation:fdin .35s ease}
+.win-box{width:100%;max-width:560px;background:var(--paper);padding:56px 40px 44px;text-align:center;box-shadow:0 30px 80px rgba(0,0,0,.25);animation:pop .5s cubic-bezier(.2,1.4,.4,1)}
+.win-box .ok{font:500 64px/1 'Cormorant Garamond',serif;color:var(--accent)}
+.win-box p{margin-top:18px;font:500 clamp(28px,5vw,38px)/1.2 'Caveat',cursive}
+.win-box .go{margin-top:34px;padding:16px 34px;background:var(--accent)}
+@keyframes fdin{from{opacity:0}}
+@keyframes pop{from{opacity:0;transform:scale(.85)}}
 .field{width:100%;padding:16px 18px;border:1px solid var(--ink);border-radius:0;background:transparent;color:var(--ink);font:500 13px 'Manrope',sans-serif;letter-spacing:.2em;text-align:center;outline:none;-webkit-appearance:none}
 .field::placeholder{color:var(--muted)}
 .shake{animation:sh .4s}
@@ -94,6 +106,9 @@ body.l-lined .verse{border:0;padding:0 0 0 4px;background:repeating-linear-gradi
   .cap span{display:none}
   .letter p{font-size:19px}
   .lock{margin:90px auto 110px}
+  .eq{gap:6px}
+  .eq .field{width:76px;font-size:18px}
+  .win-box{padding:44px 24px 34px}
 }
 </style>
 </head>
@@ -126,6 +141,8 @@ const SITE = {
 Можна писати скільки завгодно рядків — переноси збережуться.`,
   signature: `твій Захар`,
   giftTitle: `Ще одне`,
+  successText: `Оцеее у мене математичне котятко! Я знав, що у тебе все вийде! (між іншим, як завжди!)`,
+  successButton: `Перейти далі`,
   videoCipher: ``   // вставити рядок зі сторінки #/setup
 };
 
@@ -336,26 +353,50 @@ function home() {
     </section>
     ${SITE.letter ? `<section class="letter"><p>${esc(SITE.letter)}</p><div class="sign">${esc(SITE.signature)}</div></section>` : ''}
     <form class="lock" id="lock" autocomplete="off">
-      <input class="field" id="code" placeholder="ввести код" enterkeyhint="go" autocapitalize="off" spellcheck="false">
+      <div class="eq" id="eq">
+        <input class="field" id="na" inputmode="numeric" maxlength="4">
+        <b>+</b>
+        <input class="field" id="nb" inputmode="numeric" maxlength="4">
+        <b>=</b>
+        <input class="field" id="nc" inputmode="numeric" maxlength="4" enterkeyhint="go">
+      </div>
+      <button class="go">перевірити</button>
     </form>
   </main>`;
 
-  const input = document.getElementById('code');
+  const eq = document.getElementById('eq');
+  const ins = ['na', 'nb', 'nc'].map(id => document.getElementById(id));
+  ins.forEach(el => el.oninput = () => { el.value = el.value.replace(/\D/g, ''); });
   document.getElementById('lock').onsubmit = async ev => {
     ev.preventDefault();
-    const v = input.value.trim();
-    if (!v) return;
+    const [a, b, c] = ins.map(el => parseInt(el.value, 10));
+    if ([a, b, c].some(isNaN)) return;
     try {
-      unlocked = await decrypt(SITE.videoCipher, v);
+      if (a + b !== c) throw 0;
+      unlocked = await decrypt(SITE.videoCipher, codeOf(a, b, c));
       try { sessionStorage.setItem('v', unlocked); } catch (e) {}
-      input.blur();
-      location.hash = '#/dlya-tebe';
+      ins.forEach(el => el.blur());
+      win();
     } catch (err) {
-      input.value = '';
-      input.classList.remove('shake'); void input.offsetWidth; input.classList.add('shake');
+      eq.classList.remove('shake'); void eq.offsetWidth; eq.classList.add('shake');
     }
   };
   requestAnimationFrame(() => scrollTo(0, homeY));
+}
+
+/* код = обидва доданки у будь-якому порядку + сума, напр. 27+554=581 */
+function codeOf(a, b, c) { return Math.min(a, b) + '+' + Math.max(a, b) + '=' + c; }
+
+function win() {
+  const d = document.createElement('div');
+  d.className = 'win';
+  d.innerHTML = `<div class="win-box">
+      <div class="ok">♡</div>
+      <p>${esc(SITE.successText)}</p>
+      <button class="go" id="next">${esc(SITE.successButton)}</button>
+    </div>`;
+  document.body.appendChild(d);
+  document.getElementById('next').onclick = () => { d.remove(); location.hash = '#/dlya-tebe'; };
 }
 
 function poem(i) {
@@ -409,7 +450,7 @@ function setup() {
       <div class="num">налаштування</div>
       <h2>Код і відео</h2>
       <form class="setup" id="sf">
-        <input class="field" id="sc" placeholder="код (наприклад 227)">
+        <input class="field" id="sc" placeholder="приклад: 554+27=581">
         <input class="field" id="sl" placeholder="посилання на YouTube">
         <button>Згенерувати</button>
         <textarea class="field" id="out" readonly placeholder="тут з’явиться рядок для videoCipher"></textarea>
@@ -418,7 +459,8 @@ function setup() {
   </div>`;
   document.getElementById('sf').onsubmit = async ev => {
     ev.preventDefault();
-    const code = document.getElementById('sc').value.trim();
+    const m = document.getElementById('sc').value.match(/(\d+)\D+(\d+)\D+(\d+)/);
+    const code = m ? codeOf(+m[1], +m[2], +m[3]) : '';
     const id = ytId(document.getElementById('sl').value);
     const out = document.getElementById('out');
     if (!code || !id) { out.value = 'Перевір код і посилання.'; return; }
