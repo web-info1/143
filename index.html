@@ -51,7 +51,7 @@ h1{font:500 clamp(28px,4vw,40px)/1.15 'Cormorant Garamond',serif}
 @keyframes kb{from{transform:scale(1.1)}to{transform:scale(1)}}
 .more .ph img{transition:transform .8s}
 .more .ph:hover img{transform:scale(1.06)}
-@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}.hero *,.down,.hand,.sign,.letter .w{opacity:1!important;filter:none!important;clip-path:none!important}.card.pre{opacity:1;--ty:0px}.card.dev .ph img{filter:none}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}.hero *,.down,.hand,.sign,.letter .w{opacity:1!important;filter:none!important;clip-path:none!important}.card.pre{opacity:1;--ty:0px}}
 
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:56px 40px;padding:80px 0 100px}
 .card{--r:0deg;--rx:0deg;--ry:0deg;--ty:0px;position:relative;display:block;background:var(--cb,#fff);color:var(--cf,inherit);padding:12px 12px 0;box-shadow:0 1px 2px rgba(0,0,0,.06),0 10px 28px rgba(0,0,0,.05);transform:perspective(900px) translateY(var(--ty)) rotate(var(--r)) rotateX(var(--rx)) rotateY(var(--ry));transition:transform .7s cubic-bezier(.2,.7,.2,1),box-shadow .5s,opacity .9s ease;will-change:transform}
@@ -60,8 +60,7 @@ h1{font:500 clamp(28px,4vw,40px)/1.15 'Cormorant Garamond',serif}
 .card.pre{opacity:0;--ty:70px}
 .card:after{content:'';position:absolute;inset:0;background:radial-gradient(circle at var(--gx,50%) var(--gy,30%),rgba(255,255,255,.45),transparent 55%);opacity:0;transition:opacity .4s;pointer-events:none;mix-blend-mode:soft-light}
 .card:hover:after{opacity:1}
-.card .ph img{transition:filter 2.4s ease,transform 1.2s cubic-bezier(.2,.7,.2,1)}
-.card.dev .ph img{filter:sepia(1) blur(10px) brightness(1.5) contrast(.7)}
+.card .ph img{transition:transform 1.2s cubic-bezier(.2,.7,.2,1)}
 .card:hover .ph img{transform:scale(1.06)}
 .ph{background:rgba(128,120,110,.16);overflow:hidden;aspect-ratio:4/5}
 .ph img{display:block;width:100%;height:100%;object-fit:cover}
@@ -382,7 +381,7 @@ function home() {
   <main class="wrap">
     <section class="grid">
       ${POEMS.map((p, i) => `
-        <a class="card pre dev" href="#/${i + 1}" style="--r:${rot[i % rot.length]}deg;--cb:${themeOf(p, i).fr || themeOf(p, i).bg};--cf:${themeOf(p, i).fg};--ca:${themeOf(p, i).acc}">
+        <a class="card pre" href="#/${i + 1}" style="--r:${rot[i % rot.length]}deg;--cb:${themeOf(p, i).fr || themeOf(p, i).bg};--cf:${themeOf(p, i).fg};--ca:${themeOf(p, i).acc}">
           ${img(p.cover, p.title)}
           <div class="cap">${esc(p.title)}<span>${pad(i + 1)}</span></div>
         </a>`).join('')}
@@ -455,9 +454,8 @@ function liven() {
     const c = e.target, delay = (cards.indexOf(c) % 3) * 110;
     io.unobserve(c);
     setTimeout(() => c.classList.remove('pre'), delay);
-    setTimeout(() => c.classList.remove('dev'), delay + 350);
   }), { threshold: .15 });
-  cards.forEach(c => calm ? c.classList.remove('pre', 'dev') : io.observe(c));
+  cards.forEach(c => calm ? c.classList.remove('pre') : io.observe(c));
   // нахил карток за курсором
   if (fine && !calm) cards.forEach(c => {
     c.onpointermove = e => {
