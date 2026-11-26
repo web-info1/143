@@ -120,6 +120,25 @@ body.l-right .note{border-right:1px solid var(--ln);padding-right:22px}
 body.l-center .note{padding-top:34px;background:linear-gradient(var(--acc),var(--acc)) top center/48px 1px no-repeat}
 body.l-card .note{background:var(--card);padding:34px 30px;box-shadow:0 1px 2px rgba(0,0,0,.05),0 14px 34px rgba(0,0,0,.07)}
 body.l-lined .note{line-height:32px;font-size:17px;background:repeating-linear-gradient(transparent 0 31px,var(--ln) 31px 32px);padding-top:2px}
+/* стрічки з фото збоку */
+.rail{display:none;position:fixed;top:0;bottom:0;z-index:0;width:clamp(150px,calc((100vw - 760px) / 2 - 70px),230px);border-left:1px solid var(--ln,var(--line));border-right:1px solid var(--ln,var(--line));overflow:hidden;-webkit-mask-image:linear-gradient(transparent,#000 12%,#000 88%,transparent);mask-image:linear-gradient(transparent,#000 12%,#000 88%,transparent)}
+.rail.l{left:calc((100vw - 680px) / 4 - clamp(150px,calc((100vw - 760px) / 2 - 70px),230px) / 2)}
+.rail.r{right:calc((100vw - 680px) / 4 - clamp(150px,calc((100vw - 760px) / 2 - 70px),230px) / 2)}
+.rail .track{display:flex;flex-direction:column;gap:26px;padding:13px 16px;animation:up var(--dur,70s) linear infinite}
+.rail.r .track{animation-direction:reverse}
+.rail:hover .track,.ribbon:hover .track{animation-play-state:paused}
+.rail .sp,.ribbon .sp{background:var(--fr,#fff);padding:6px 6px 18px;box-shadow:0 1px 2px rgba(0,0,0,.06),0 8px 20px rgba(0,0,0,.08)}
+.rail .sp:nth-child(odd){transform:rotate(-2deg)}.rail .sp:nth-child(even){transform:rotate(1.6deg)}
+.sp img{display:block;width:100%;height:auto}
+@keyframes up{to{transform:translateY(-50%)}}
+@keyframes left{to{transform:translateX(-50%)}}
+.ribbon{margin:30px calc(50% - 50vw) 0;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent);mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent)}
+.ribbon .track{display:flex;width:max-content;gap:14px;padding:10px 0 14px;animation:left var(--dur,60s) linear infinite}
+.ribbon .sp{padding:4px 4px 12px}
+.ribbon .sp:nth-child(odd){transform:rotate(-2deg)}.ribbon .sp:nth-child(even){transform:rotate(2deg)}
+.ribbon .sp img{width:auto;height:96px}
+@media(min-width:1100px){.rail{display:block}.ribbon{display:none}.page{position:relative;z-index:1}.wrap>.back{position:relative;z-index:1;display:inline-block;margin-left:calc((100% - 680px) / 2)}}
+@media(prefers-reduced-motion:reduce){.rail .track,.ribbon .track{animation:none!important}}
 .note{margin-top:36px;color:#3a3832;white-space:pre-line}
 .more{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:16px;margin-top:56px}
 .more .ph{aspect-ratio:1}
@@ -193,6 +212,7 @@ const SITE = {
    poem   — сам вірш (можна залишити порожнім ``)
    note   — твоє пояснення
    photos — додаткові фото внизу сторінки (можна [])
+   side   — фото для рухомих стрічок збоку, напр. [`photos/01/1.jpg`, …]
    theme  — стиль сторінки вірша, число від 1 до 15 (див. THEMES нижче)
    Між блоками { ... } обов'язково кома.
 */
@@ -370,6 +390,8 @@ const rot = [-1.2, .8, -.5, 1.1, -.9, .6, -.3, 1];
 const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const pad = n => String(n).padStart(2, '0');
 const img = (src, alt = '') => `<div class="ph"><img src="${esc(src)}" alt="${esc(alt)}" loading="lazy" onerror="this.style.opacity=0"></div>`;
+
+const strip = srcs => srcs.concat(srcs).map(src => `<div class="sp"><img src="${esc(src)}" alt="" loading="lazy" onerror="this.parentNode.style.display='none'"></div>`).join('');
 
 let view = '', homeY = 0;
 let unlocked = null;
@@ -577,13 +599,19 @@ function poem(i) {
   if (!p) return home();
   const prev = POEMS[i - 1], next = POEMS[i + 1];
   applyTheme(themeOf(p, i));
+  // фото для стрічок: свої (side) або, поки їх нема, обкладинки інших віршів
+  const pics = p.side && p.side.length ? p.side : POEMS.filter((q, j) => j !== i).map(q => q.cover);
+  const half = Math.ceil(pics.length / 2);
   app.innerHTML = `
+  <div class="rail l"><div class="track" style="--dur:${half * 9}s">${strip(pics.slice(0, half))}</div></div>
+  <div class="rail r"><div class="track" style="--dur:${(pics.length - half) * 9}s">${strip(pics.slice(half))}</div></div>
   <div class="wrap">
     <a class="back" href="#/">← усі вірші</a>
     <article class="page fade">
       <div class="num">${pad(i + 1)} / ${pad(POEMS.length)}</div>
       <h2>${esc(p.title)}</h2>
       <div class="cover">${img(p.cover, p.title)}</div>
+      <div class="ribbon"><div class="track" style="--dur:${pics.length * 6}s">${strip(pics)}</div></div>
       ${p.poem ? `<div class="verse">${esc(p.poem)}</div>` : ''}
       ${p.note ? `<div class="note">${esc(p.note)}</div>` : ''}
       ${p.photos && p.photos.length ? `<div class="more">${p.photos.map(s => img(s)).join('')}</div>` : ''}
