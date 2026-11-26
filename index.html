@@ -193,7 +193,7 @@ window.addEventListener('error', function (e) {
 <script>
 /* Увесь вміст (тексти, вірші, фото) зашифрований паролем і відкривається тільки після нього. */
 let SITE = {}, POEMS = [];
-const LOCKS = ["WOix62vZLBBb7Qy0aJJQiaoRSpaWdv1fgWbPu/ABSRALl2rxmD+z6G9nqS5Zo1Q1D1Ov8GxhCsiy4ZnGp+dUwSGn1uKSeePimrtxEct3Ud/4c9cbfBZ+3w==","zBqwA0dgiwhtFui/6yVbIBzApp7NL+bLxF9S8ReueSb5ir24rX53V0JctSqDCSO2l8gk+HQkeKIHwLxM0f3T5u84Qzh5QgUs8JgMstXD8SvHuKMgdBA/wA==","wWtmdQ8m6ZEMdvwFNcMtwgkTIlhdzCqT+4C09VFtc1vHRxEsFwO1jV117mKfrPA5zitKjkTeJjU8EmT+RxAEnA0aR6buurIGe6DOk+S9WPm7D27CixIi8g=="];
+const LOCKS = ["ycAsvk+FKMAgPmOxcO/wRAOOiD3BVJUm/zml6eJx5FV/cIe5GPs6eDdBRJnI37VXOFOAxJfdoRMRhTFQrrOhiYY9eIh0gC9+17VjJC83w1KAnSXe8Av6Iw==","JlbjCZJeTRFemh+MLx/zxA83XKYRXtY1LNkXb1mwuaAIXw4bNJQcDztc5iwpBftFt4AOCBrsLvY5DS6ijyeMu9cV3D7iKFV+7vEWjsCsXffaHZ4WxCec+A==","dNRXpy6gPzOiDKkCyOLkMj/i3cT0KpKrgUohkxc1FltvNh3lxiy1JBvryJXPdsADOh+G86XbR38R86LZYfy3Fa7wiPevu/+FA0D5jpXDujglngT10xthiA=="];
 
 
 /* ============ СТИЛІ ВІРШІВ ============
@@ -450,8 +450,9 @@ function poem(i) {
   const prev = POEMS[i - 1], next = POEMS[i + 1];
   applyTheme(themeOf(p, i));
   // фото для стрічок: свої (side) або, поки їх нема, обкладинки інших віршів
-  const pics = p.side && p.side.length ? p.side : POEMS.filter((q, j) => j !== i).map(q => q.cover);
-  const half = Math.ceil(pics.length / 2);
+  let pics = p.side && p.side.length ? p.side : POEMS.filter((q, j) => j !== i).map(q => q.cover);
+  let half = Math.ceil(pics.length / 2);
+  if (p.sideL && p.sideR) { pics = p.sideL.concat(p.sideR); half = p.sideL.length; }
   app.innerHTML = `
   <div class="rail l"><div class="track" style="--dur:${half * 13}s">${strip(pics.slice(0, half))}</div></div>
   <div class="rail r"><div class="track" style="--dur:${(pics.length - half) * 13}s">${strip(pics.slice(half))}</div></div>
