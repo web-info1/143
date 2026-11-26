@@ -121,10 +121,11 @@ body.l-center .note{padding-top:34px;background:linear-gradient(var(--acc),var(-
 body.l-card .note{background:var(--card);padding:34px 30px;box-shadow:0 1px 2px rgba(0,0,0,.05),0 14px 34px rgba(0,0,0,.07)}
 body.l-lined .note{line-height:32px;font-size:17px;background:repeating-linear-gradient(transparent 0 31px,var(--ln) 31px 32px);padding-top:2px}
 /* стрічки з фото збоку */
-.rail{display:none;position:fixed;top:0;bottom:0;z-index:0;width:clamp(150px,calc((100vw - 760px) / 2 - 70px),230px);border-left:1px solid var(--ln,var(--line));border-right:1px solid var(--ln,var(--line));overflow:hidden;-webkit-mask-image:linear-gradient(transparent,#000 12%,#000 88%,transparent);mask-image:linear-gradient(transparent,#000 12%,#000 88%,transparent)}
-.rail.l{left:calc((100vw - 680px) / 4 - clamp(150px,calc((100vw - 760px) / 2 - 70px),230px) / 2)}
-.rail.r{right:calc((100vw - 680px) / 4 - clamp(150px,calc((100vw - 760px) / 2 - 70px),230px) / 2)}
-.rail .track{display:flex;flex-direction:column;gap:26px;padding:13px 16px;animation:up var(--dur,70s) linear infinite}
+.rail{display:none;position:fixed;top:0;bottom:0;z-index:0;width:clamp(110px,calc((100vw - 760px) / 2 - 150px),160px);border-left:1px solid var(--ln,var(--line));border-right:1px solid var(--ln,var(--line));overflow:hidden;-webkit-mask-image:linear-gradient(transparent,#000 12%,#000 88%,transparent);mask-image:linear-gradient(transparent,#000 12%,#000 88%,transparent)}
+.rail.l{left:calc((100vw - 680px) / 4 - clamp(110px,calc((100vw - 760px) / 2 - 150px),160px) / 2)}
+.rail.r{right:calc((100vw - 680px) / 4 - clamp(110px,calc((100vw - 760px) / 2 - 150px),160px) / 2)}
+.rail .track{display:flex;flex-direction:column;gap:22px;padding:11px 14px;animation:up var(--dur,70s) linear infinite;opacity:.6;transition:opacity .5s}
+.rail:hover .track{opacity:1}
 .rail.r .track{animation-direction:reverse}
 .rail:hover .track,.ribbon:hover .track{animation-play-state:paused}
 .rail .sp,.ribbon .sp{background:var(--fr,#fff);padding:6px 6px 18px;box-shadow:0 1px 2px rgba(0,0,0,.06),0 8px 20px rgba(0,0,0,.08)}
@@ -603,8 +604,8 @@ function poem(i) {
   const pics = p.side && p.side.length ? p.side : POEMS.filter((q, j) => j !== i).map(q => q.cover);
   const half = Math.ceil(pics.length / 2);
   app.innerHTML = `
-  <div class="rail l"><div class="track" style="--dur:${half * 9}s">${strip(pics.slice(0, half))}</div></div>
-  <div class="rail r"><div class="track" style="--dur:${(pics.length - half) * 9}s">${strip(pics.slice(half))}</div></div>
+  <div class="rail l"><div class="track" style="--dur:${half * 13}s">${strip(pics.slice(0, half))}</div></div>
+  <div class="rail r"><div class="track" style="--dur:${(pics.length - half) * 13}s">${strip(pics.slice(half))}</div></div>
   <div class="wrap">
     <a class="back" href="#/">← усі вірші</a>
     <article class="page fade">
