@@ -130,6 +130,9 @@ body.l-lined .note{line-height:32px;font-size:17px;background:repeating-linear-g
 .rail .sp,.ribbon .sp{background:var(--fr,#fff);padding:6px 6px 18px;box-shadow:0 1px 2px rgba(0,0,0,.06),0 8px 20px rgba(0,0,0,.08)}
 .rail .sp:nth-child(odd){transform:rotate(-2deg)}.rail .sp:nth-child(even){transform:rotate(1.6deg)}
 .sp img{display:block;width:100%;height:auto}
+.spc{display:block;margin:6px 0 -10px;text-align:center;font:500 17px/1 'Caveat',cursive;color:var(--fg,var(--ink));opacity:.75}
+.ribbon .spc{font-size:14px;margin:4px 0 -6px}
+.same .rail.r .track{animation-direction:normal}
 @keyframes up{to{transform:translateY(-50%)}}
 @keyframes left{to{transform:translateX(-50%)}}
 .ribbon{margin:30px calc(50% - 50vw) 0;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent);mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent)}
@@ -193,7 +196,7 @@ window.addEventListener('error', function (e) {
 <script>
 /* Увесь вміст (тексти, вірші, фото) зашифрований паролем і відкривається тільки після нього. */
 let SITE = {}, POEMS = [];
-const LOCKS = ["jdQEoyiYhcsIwLLN4uT1B4F1hvjboUSEONQyTxh+LyRqWYSdTbg4w/YDgx5o+jVLuv7XZFYgm8c5UdvsFgj5Sy4cy8Jnxa2t0k3WnM374+9/HknftoqfQA==","JkxKUPHZN5OUF/8fChx++1I4A1NgyvSj5X5dZP8+HHw/PR+OBWt3mq9UtrbMYjBImk7G79cmtkrPvnE9RU7yPX0tg60fbse0wNlZ+GlUoXJ5ca8GRSpF/w==","Pc4YwN0+aLKlNg//RO2DTryGdT2iOtqKidJ13IlIU2pobHD0IcwAWo5mX6/n9Lrbfaha+fX5AIOnQuGW2dSW2z282gI7io/BKpg/aIlcsyAT8aekVjZh2w=="];
+const LOCKS = ["5Jw6kW0Y1ANjeeos9ZhA+1nmP3TpqbkB33M8BJx1lEeliC40aq79PQQI3sOddiKVhboUnJICxu1YBtiOtYIDCh5Si50t5P0QzAbalz6sH3swLM5wXJaQqA==","jUMMx80gF8deHLDqFsUTiy6jrwq0kY3kBoDuP1mx3h96uYPXfaOyYhrXaip97ydxZ0+m0eNnebnebioQn3dr5SBi0tvEz9watm39taxaIyjFAG3aUPdexw==","Yc1TjWudG0ltwKjnJWHUUjRakXtWSMmuuu9fIlyBmum8N3L7d1Wwe7st6PfzarkMy2pfF3IV2pq0gPOGZ69Aa0FUN4Ytlh+f7D2tchO+0dQREvNCJ1/dww=="];
 
 
 /* ============ СТИЛІ ВІРШІВ ============
@@ -247,7 +250,7 @@ const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;
 const pad = n => String(n).padStart(2, '0');
 const img = (src, alt = '') => `<div class="ph"><img data-enc="${esc(src)}" alt="${esc(alt)}"></div>`;
 
-const strip = srcs => srcs.concat(srcs).map(src => `<div class="sp"><img data-enc="${esc(src)}" alt=""></div>`).join('');
+const strip = srcs => srcs.concat(srcs).map(s => { const [src, cap] = String(s).split('|'); return `<div class="sp"><img data-enc="${esc(src)}" alt="">${cap ? `<span class="spc">${esc(cap)}</span>` : ''}</div>`; }).join('');
 
 let view = '', homeY = 0;
 let unlocked = null;
@@ -454,8 +457,8 @@ function poem(i) {
   let half = Math.ceil(pics.length / 2);
   if (p.sideL && p.sideR) { pics = p.sideL.concat(p.sideR); half = p.sideL.length; }
   app.innerHTML = `
-  <div class="rail l"><div class="track" style="--dur:${half * 13}s">${strip(pics.slice(0, half))}</div></div>
-  <div class="rail r"><div class="track" style="--dur:${(pics.length - half) * 13}s">${strip(pics.slice(half))}</div></div>
+  <div class="${p.sameDir ? 'same' : ''}"><div class="rail l"><div class="track" style="--dur:${half * 13}s">${strip(pics.slice(0, half))}</div></div>
+  <div class="rail r"><div class="track" style="--dur:${(pics.length - half) * 13}s">${strip(pics.slice(half))}</div></div></div>
   <div class="wrap">
     <a class="back" href="#/">← усі вірші</a>
     <article class="page fade">
