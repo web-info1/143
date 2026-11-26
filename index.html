@@ -139,6 +139,13 @@ body.l-lined .note{line-height:32px;font-size:17px;background:repeating-linear-g
 .ribbon .sp img{width:auto;height:96px}
 @media(min-width:1100px){.rail{display:block}.ribbon{display:none}.page{position:relative;z-index:1}.wrap>.back{position:relative;z-index:1;display:inline-block;margin-left:calc((100% - 680px) / 2)}}
 @media(prefers-reduced-motion:reduce){.rail .track,.ribbon .track{animation:none!important}}
+.gate{min-height:100vh;min-height:100svh;border:0}
+.gate .lock{margin:0 auto;width:100%;max-width:360px}
+.pw-label{display:block;margin-bottom:18px;font:italic 500 44px/1 'Cormorant Garamond',serif;color:var(--accent)}
+.gate .pw{letter-spacing:.06em;font-size:16px;text-transform:none}
+.gate .lock.shake .pw{border-color:#a33}
+.gate .lock>*{opacity:0;animation:rise 1s cubic-bezier(.2,.7,.2,1) forwards}
+.gate .pw{animation-delay:.15s}.gate .go{animation-delay:.3s}
 .note{margin-top:36px;color:#3a3832;white-space:pre-line}
 .more{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:16px;margin-top:56px}
 .more .ph{aspect-ratio:1}
@@ -184,162 +191,9 @@ window.addEventListener('error', function (e) {
 </script>
 
 <script>
-/* ============ ТЕКСТИ САЙТУ ============
-   Усі тексти — у зворотних лапках ` `
-   Всередині можна писати апострофи і переносити рядки.
-   Не використовуй сам символ ` усередині тексту.
-*/
-const SITE = {
-  dates: `27.11.2023 — 27.11.2026`,
-  bigNumber: `15`,
-  bigLabel: `віршів`,
-  since: `2023-11-27`,   // з якого дня рахувати «разом уже»
-  title: `які я написав для тебе`,
-  intro: `Кожен із них — про якийсь наш момент.
-Натисни на фото, щоб прочитати, звідки він узявся.`,
-  letter: `Тут твій останній лист.
-
-Можна писати скільки завгодно рядків — переноси збережуться.`,
-  signature: `твій Захар`,
-  giftTitle: `Ще одне`,
-  successText: `Оцеее у мене математичне котятко! Я знав, що у тебе все вийде! (між іншим, як завжди!)`,
-  successButton: `Перейти далі`,
-  videoCipher: ``   // вставити рядок зі сторінки #/setup
-};
-
-/* ============ ВІРШІ ============
-   cover  — фото на головній і вгорі сторінки вірша
-   poem   — сам вірш (можна залишити порожнім ``)
-   note   — твоє пояснення
-   photos — додаткові фото внизу сторінки (можна [])
-   side   — фото для рухомих стрічок збоку, напр. [`photos/01/1.jpg`, …]
-   theme  — стиль сторінки вірша, число від 1 до 15 (див. THEMES нижче)
-   Між блоками { ... } обов'язково кома.
-*/
-const POEMS = [
-  {
-    title: `1097`,
-    theme: 1,
-    cover: `photos/01.jpg`,
-    side: [`photos/01/01.jpg`, `photos/01/02.jpg`, `photos/01/03.jpg`, `photos/01/14.jpg`, `photos/01/04.jpg`, `photos/01/05.jpg`, `photos/01/06.jpg`, `photos/01/07.jpg`, `photos/01/15.jpg`, `photos/01/08.jpg`, `photos/01/09.jpg`, `photos/01/10.jpg`, `photos/01/16.jpg`, `photos/01/11.jpg`, `photos/01/12.jpg`, `photos/01/13.jpg`],
-    poem: ``,
-    note: `У цей вірш автор заклав декілька різних сенсів і значень. Перш за все, він звертає увагу на те, що його сенс ховається під подушкою кожного ранку. Коли він прокидається, його телефон лежить під подушкою, і там на нього чекає повідомлення від Коханої. Він не хоче прокидатися і не бачити цього повідомлення. Він хоче його отримувати, бо саме це повідомлення створює його день і дає йому сенс. Без нього його день і його життя втрачають сенс, бо це повідомлення дає йому спокій, щастя, силу і віру — віру у власні сили. Автор наповнюється і отримує від нього сили. І він знає, що отримуватиме його вічно. А ще краще — чутиме його не з телефону, а з вуст своєї Коханої.`,
-    photos: []
-  },
-  {
-    title: `зустріч`,
-    theme: 7,
-    cover: `photos/02.jpg`,
-    side: [`photos/02/01.jpg`, `photos/02/02.jpg`, `photos/02/03.jpg`, `photos/02/04.jpg`, `photos/02/05.jpg`, `photos/02/06.jpg`, `photos/02/07.jpg`, `photos/02/08.jpg`, `photos/02/09.jpg`, `photos/02/10.jpg`, `photos/02/11.jpg`],
-    poem: ``,
-    note: `У цьому вірші автор хоче показати, що його Кохана є для нього всім. І це «все» — не просто слова і не узагальнення. Все — це буквально все: весь його світ, весь його кругозір, увесь його всесвіт. Його Кохана — це затишок. Його Кохана — це цікавість. Його Кохана — це дім. Дуже часто автор може зупинитися і, поки Кохана займається своїми справами, сидить у телефоні чи щось пише, просто дивитися на неї і подумки дякувати Богові за те, що вона в нього є. Також автор описує, що для нього честь пояснювати Коханій будь-що, особливо те, чого вона не дуже знає. Для нього це найприємніше, що може бути.`,
-    photos: []
-  },
-  {
-    title: `ліхтарі`,
-    theme: 2,
-    cover: `photos/03.jpg`,
-    poem: ``,
-    note: `У цьому вірші автор хоче показати те, про що закохана пара мріяла давно: можливість прогулятися вечірнім містом, тримаючись за руки і бачачи перед собою тільки шум. І лише коли вони повертали голову вбік, дивилися одне на одного, все ставало чітким, бо вони відчували, що в цьому місті вони одні. Автор показує романтизовані розмови про вечірні прогулянки, які є мрією цієї пари. І найголовніше тут те, що неважливо, чи це вечірнє плаття, поло та льон, чи піжама, сорочка та кашемір. Неважливо, де, коли і як — автор каже, що ця пара буде разом повсякчас.`,
-    photos: []
-  },
-  {
-    title: `затишок`,
-    theme: 4,
-    cover: `photos/04.jpg`,
-    poem: ``,
-    note: `Тут автор також романтизує і показує мрії пари. Він продовжує лінію, що тягнеться з «ліхтарів», і вказує на те, що йому неважливо, які речі їх оточують і де вони є, бо зі своєю Коханою він щасливий усюди. Саме вона, як ці піони, наповнює простір. Якщо її забрати з кімнати, простір утрачає свій шарм і своє наповнення, стає сірим і позбавленим сенсу. Саме Кохана надає автору сенс, і саме завдяки їй він може знову відчути себе дитиною.`,
-    photos: []
-  },
-  {
-    title: `дитинство`,
-    theme: 3,
-    cover: `photos/05.jpg`,
-    poem: ``,
-    note: `Тут автор продовжує думку попереднього вірша і пише про дитинство, а саме про те, що завдяки Коханій він повертається в це дитинство. Він знову відчуває важливість вибору найбанальніших речей, відчуває дрібні переживання, бо Кохана зробила його сентиментальним. Він обіцяє їй, як маленький принц, здійснити її мрії. І наголошує, що коли вона доторкається до нього чи промовляє лагідне слово, у ньому прокидається це дитя, яке, окрилене, хоче здійснити й досягти всього, аби лиш зробити свою принцесу щасливою.`,
-    photos: []
-  },
-  {
-    title: `мрія`,
-    theme: 9,
-    cover: `photos/06.jpg`,
-    poem: ``,
-    note: `У цьому вірші автор хоче нагадати цій парі, що їхнє основне завдання, те, для чого вони створені і заради чого зійшлися, — це здійснювати свої котячі мрії, писати нову історію, звертати увагу одне на одного, змушувати одне одного сміятися і плакати щодуху від щирості, від того, що торкаються душі. І найголовніше: їм не обов'язково бути однаковими і мати однаковий погляд на все. Бо сім'я — це поєднання двох різних елементів, які будують нову історію. Їхню історію — не суто його і не суто її, а спільну. І автор свідомо дякує за те, що в нього є Кохана, а в неї є своя думка, яку він безмежно любить і цінує.`,
-    photos: []
-  },
-  {
-    title: `пригода`,
-    theme: 14,
-    cover: `photos/07.jpg`,
-    poem: ``,
-    note: `У цьому вірші автор хоче звернути увагу на те, що Кохана принесла в його життя одну дуже важливу річ — пригоду. Він безмежно вдячний їй за те, що вона навчила його бачити пригоду в будь-яких труднощах, проблемах і загадках. На жаль, його Кохана сама відійшла від цього бачення. Але він щоразу, коли стикається з новими труднощами чи іншими складними речами, розглядає їх крізь призму пригоди, яка неабияк допоможе йому в майбутньому і буде веселою, бо веселощі — запорука щастя. І найголовніше те, що кожен прожитий з Коханою день для автора — пригода. Це не банальність і не рутина. Це щасливе життя, про яке мріяла дитина, якою колись був автор. Автор наголошує, що саме з Коханою все стає незвичним, смішним, естетичним. Саме вона є для нього найкращим партнером, другом і сміхотуном. Жодна людина на цій землі не зможе замінити його Кохану. Жодна людина не варта й однієї її слізки. Саме з Коханою автору найкраще.`,
-    photos: []
-  },
-  {
-    title: `дім`,
-    theme: 5,
-    cover: `photos/08.jpg`,
-    poem: ``,
-    note: `У цьому вірші автор хоче показати Коханій, що йому неважливо, де вони, в яких умовах і що навколо. Йому важливо, що вони є і що Кохана тримає його за руку. Бо де б вони не опинилися, там завжди буде їхній дім. Їхній дім — це те, що вони створюють самі.`,
-    photos: []
-  },
-  {
-    title: `цеглина`,
-    theme: 10,
-    cover: `photos/09.jpg`,
-    poem: ``,
-    note: `У цьому вірші автор продовжує описувати їхній дім. Він хоче розібрати його на деталі й зрозуміти, з чого той складається. І розуміє, що поставити свій дім вони можуть будь-де, але всюди він триматиметься на тому самому — на тому, що вони в нього вклали. Щоб побудувати дім, вони виклали кожну цеглинку, і кожна цеглинка — це уособлення їхніх стосунків. Автор описує цеглинку як комплекс. Для нього цеглинка — як нейрон. У нашій голові нейрони утворюються завдяки чомусь новому і закріплюються завдяки досвіду, який ми з цього нового отримуємо. Так само і цеглинки, з яких будується їхній дім: вони закріплюються тим, що пара переживає разом. Саме тому автор дуже не хоче, щоб ці цеглини були з дешевого і ненадійного матеріалу.`,
-    photos: []
-  },
-  {
-    title: `два шляхи`,
-    theme: 8,
-    cover: `photos/10.jpg`,
-    poem: ``,
-    note: `У цьому вірші автор хоче розповісти й закріпити думку про те, що до того, як з'явилися «ми», були просто «ти» і «я». Двоє різних людей, які не мали нічого спільного, не знали одне одного і жили своє життя одне без одного. Потім їхні шляхи перетнулися, і це стало найважливішим у їхньому житті. Автор говорить про те, що вони, як дві річечки, будують власне море, власну історію. І в цю історію кожен несе свій досвід — усе те, що набув до того, як перетнувся з іншою річечкою.`,
-    photos: []
-  },
-  {
-    title: `перон`,
-    theme: 11,
-    cover: `photos/11.jpg`,
-    poem: ``,
-    note: ``,
-    photos: []
-  },
-  {
-    title: `серденько`,
-    theme: 13,
-    cover: `photos/12.jpg`,
-    poem: ``,
-    note: ``,
-    photos: []
-  },
-  {
-    title: `час`,
-    theme: 12,
-    cover: `photos/13.jpg`,
-    poem: ``,
-    note: ``,
-    photos: []
-  },
-  {
-    title: `історія`,
-    theme: 6,
-    cover: `photos/14.jpg`,
-    poem: ``,
-    note: ``,
-    photos: []
-  },
-  {
-    title: `я знаю, в нас буде!`,
-    theme: 15,
-    cover: `photos/15.jpg`,
-    poem: ``,
-    note: ``,
-    photos: []
-  }
-];
+/* Увесь вміст (тексти, вірші, фото) зашифрований паролем і відкривається тільки після нього. */
+let SITE = {}, POEMS = [];
+const LOCKS = ["9+u8cBpDG79uH2bmp0GxYlwnssu0HFFeif3RvqQA9WdqOgUL00qRwtqFAXEtkLCyTkvkzHGcasnt3c7sC8anaugz8dgOirmO95r9b0NRMCTlinUiM6qyQA==","BB33SNPEsfhgiQ/qIewS4vJvPDsAY3qKBVFweLw1dH4wmi0JxnQ2NV6nFUOLTrdqpLFa35I+6dTgGtQnHAeuquVw86E/wzz28NzrXSJ7EOxuSRHVt0bjhQ==","itvCRYm6ir/qVRQH+2Rgdri/IEaTHBMEkok2K4Ri3U7QSDiPt+sTueYPLXqbONpbYF9Agv5tI5AsGXj13qvs9l/ry51p/PjH3JJ6eCVVfW9ZjTtmtFMMUA=="];
 
 
 /* ============ СТИЛІ ВІРШІВ ============
@@ -391,9 +245,9 @@ const app = document.getElementById('app');
 const rot = [-1.2, .8, -.5, 1.1, -.9, .6, -.3, 1];
 const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const pad = n => String(n).padStart(2, '0');
-const img = (src, alt = '') => `<div class="ph"><img src="${esc(src)}" alt="${esc(alt)}" loading="lazy" onerror="this.style.opacity=0"></div>`;
+const img = (src, alt = '') => `<div class="ph"><img data-enc="${esc(src)}" alt="${esc(alt)}"></div>`;
 
-const strip = srcs => srcs.concat(srcs).map(src => `<div class="sp"><img src="${esc(src)}" alt="" loading="lazy" onerror="this.parentNode.style.display='none'"></div>`).join('');
+const strip = srcs => srcs.concat(srcs).map(src => `<div class="sp"><img data-enc="${esc(src)}" alt=""></div>`).join('');
 
 let view = '', homeY = 0;
 let unlocked = null;
@@ -692,7 +546,64 @@ async function decrypt(data, code) {
   return td.decode(pt);
 }
 
+/* ============ ПАРОЛЬ ============ */
+let KEY = null;
+const norm = s => (s || '').toLowerCase().replace(/[^a-zа-яіїєґ]/g, '');
+async function tryUnlock(pw) {
+  const p = norm(pw);
+  if (!p) return false;
+  for (const lock of LOCKS) {
+    try {
+      const raw = unb64(await decrypt(lock, p));
+      KEY = await crypto.subtle.importKey('raw', raw, 'AES-GCM', false, ['decrypt']);
+      const res = await fetch('d.bin', { cache: 'no-cache' });
+      const data = JSON.parse(td.decode(await openBox(new Uint8Array(await res.arrayBuffer()))));
+      SITE = data.SITE; POEMS = data.POEMS;
+      try { localStorage.setItem('pw', p); } catch (e) {}
+      return true;
+    } catch (e) { KEY = null; }
+  }
+  return false;
+}
+const openBox = async u => new Uint8Array(await crypto.subtle.decrypt({ name: 'AES-GCM', iv: u.slice(0, 12) }, KEY, u.slice(12)));
+const pics = new Map();
+function photo(name) {
+  if (!pics.has(name)) pics.set(name, fetch('p/' + name).then(r => r.arrayBuffer())
+    .then(b => openBox(new Uint8Array(b))).then(u => URL.createObjectURL(new Blob([u], { type: 'image/jpeg' }))));
+  return pics.get(name);
+}
+function hydrate() {
+  document.querySelectorAll('img[data-enc]:not([src])').forEach(el => {
+    el.src = 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==';
+    photo(el.dataset.enc).then(u => { el.src = u; }, () => { el.style.opacity = 0; });
+  });
+}
+new MutationObserver(hydrate).observe(document.getElementById('app'), { childList: true, subtree: true });
+
+function gate() {
+  applyTheme(null);
+  app.innerHTML = `
+  <section class="hero gate" id="hero">
+    <canvas id="sky"></canvas>
+    <form class="lock" id="pwf" autocomplete="off">
+      <label class="pw-label" for="pw">пароль</label>
+      <input class="field pw" id="pw" type="text" autocapitalize="off" autocorrect="off" spellcheck="false" enterkeyhint="go">
+      <button class="go">увійти</button>
+    </form>
+  </section>`;
+  const f = document.getElementById('pwf'), inp = document.getElementById('pw');
+  inp.oninput = () => f.classList.remove('shake');
+  f.onsubmit = async ev => {
+    ev.preventDefault();
+    inp.blur();
+    if (await tryUnlock(inp.value)) { location.hash = '#/'; route(); }
+    else { f.classList.remove('shake'); void f.offsetWidth; f.classList.add('shake'); }
+  };
+  if (!calm) sky(document.getElementById('sky'), document.getElementById('hero'));
+}
+
 function route() {
+  if (!KEY) return gate();
   const h = location.hash.replace(/^#\/?/, '');
   if (view === 'home') homeY = scrollY;
   if (h === 'setup') { view = 'setup'; setup(); }
@@ -701,7 +612,11 @@ function route() {
   else { view = 'home'; home(); }
 }
 addEventListener('hashchange', route);
-route();
+(async () => {
+  let saved = null;
+  try { saved = localStorage.getItem('pw'); } catch (e) {}
+  if (saved && await tryUnlock(saved)) route(); else gate();
+})();
 </script>
 </body>
 </html>
