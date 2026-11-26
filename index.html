@@ -193,7 +193,7 @@ window.addEventListener('error', function (e) {
 <script>
 /* Увесь вміст (тексти, вірші, фото) зашифрований паролем і відкривається тільки після нього. */
 let SITE = {}, POEMS = [];
-const LOCKS = ["9+u8cBpDG79uH2bmp0GxYlwnssu0HFFeif3RvqQA9WdqOgUL00qRwtqFAXEtkLCyTkvkzHGcasnt3c7sC8anaugz8dgOirmO95r9b0NRMCTlinUiM6qyQA==","BB33SNPEsfhgiQ/qIewS4vJvPDsAY3qKBVFweLw1dH4wmi0JxnQ2NV6nFUOLTrdqpLFa35I+6dTgGtQnHAeuquVw86E/wzz28NzrXSJ7EOxuSRHVt0bjhQ==","itvCRYm6ir/qVRQH+2Rgdri/IEaTHBMEkok2K4Ri3U7QSDiPt+sTueYPLXqbONpbYF9Agv5tI5AsGXj13qvs9l/ry51p/PjH3JJ6eCVVfW9ZjTtmtFMMUA=="];
+const LOCKS = ["hUcTNVQBN9cvHw4fKk0eyfDd8e/EiXcaCK+qnkWvPh4UiluIqQ7IVanT/t0JjqZikrf7BVLMcOkU5BJznVAfGqFXUkRWOrQR+Nz6O9p+9L+h1FexwR9eyA==","UCURth099XcDWluVDHz+GVhVYWPSIJd6O45DT8UeEj6JPZ3FqZX629yv3dIMYgWAci90N4VW9tYNlRdVe2Rl29aE5/zo73Or3akbIYbybMRtzJBZPuJBsQ==","YDBhIrpIveqzxtUQLAqOssq4tK2p05Ucip18ZNode1oKuvxsq/z5RNOCqB1dSHbQrSTC8dfAXk9BfQMw/vKMgfvmhSl8xAYA6Ok56SiboQ8sJqi6Ipqa1w=="];
 
 
 /* ============ СТИЛІ ВІРШІВ ============
@@ -559,7 +559,6 @@ async function tryUnlock(pw) {
       const res = await fetch('d.bin', { cache: 'no-cache' });
       const data = JSON.parse(td.decode(await openBox(new Uint8Array(await res.arrayBuffer()))));
       SITE = data.SITE; POEMS = data.POEMS;
-      try { localStorage.setItem('pw', p); } catch (e) {}
       return true;
     } catch (e) { KEY = null; }
   }
@@ -612,11 +611,8 @@ function route() {
   else { view = 'home'; home(); }
 }
 addEventListener('hashchange', route);
-(async () => {
-  let saved = null;
-  try { saved = localStorage.getItem('pw'); } catch (e) {}
-  if (saved && await tryUnlock(saved)) route(); else gate();
-})();
+try { localStorage.removeItem('pw'); } catch (e) {}   // пароль щоразу заново
+gate();
 </script>
 </body>
 </html>
