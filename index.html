@@ -193,7 +193,7 @@ window.addEventListener('error', function (e) {
 <script>
 /* Увесь вміст (тексти, вірші, фото) зашифрований паролем і відкривається тільки після нього. */
 let SITE = {}, POEMS = [];
-const LOCKS = ["3e92trJ8Mx44jyuRJ1T6QWXAwBbg2HW/CdXuU2HtewTir6kBD1HXsDKLeJmPyp0+6WMSZrK+nCabemjbdlDr0WDkuVRXxO/RyDIt7bkl4Au9/mq1ugRFRQ==","MDmppcvlOoTv3CtOfbn8YVdjWeCWxCPU+wzTK3jQ/wGY77XKYbcRYeGodl5y0EFT4ViJj3Ovm3weyY6YLFqsA9a/ByGEYHmqS2mLDNAAOd7t5CtyBQj/NQ==","TB43W8UzB4fEx1ssiptd/freUEIat3n7uah/mziTkkSULHWh8lELd/09OUiolPsVoNyII033hNNNixVT7m/6ISoOB6qeiPooQUSQSy+M5RvdwksrAfpYKg=="];
+const LOCKS = ["Ln/B73dsezDI+PohPQv/SxDKcbElIBszl0iQegAaV68mMNpMI0OXxpOmbkXHaDVVfFZ3lVTAT0rExT8F8oocoyMhbwQgBw0wOyGedvEECPP2nKGchbdkag==","QnuH70Ro2mNonsKAjsdqma/66F7xtJaeZTDUMkukUC6JNTIUDUbIViVIeTrQgvQqrPPIiDha7XFVcq4HAHKVoT2W1tpOsaun1avVWFolD4dEIsKrSN2iiA==","COv4blb4KgFRuGAB/fB3osZJnNPqO33FbneL9uZsFZHgFCQTm6SkoVR3ryBGo+navTs4t71mk2jMoGPbRWc+H/IjKBVWYpOl8iijiRQ/PhXYWWae79eSwA=="];
 
 
 /* ============ СТИЛІ ВІРШІВ ============
@@ -331,7 +331,7 @@ function liven() {
     if (!tog.isConnected) return clearInterval(timer);
     const ms = Date.now() - since, d = Math.floor(ms / 864e5), r = ms % 864e5;
     const hh = pad(Math.floor(r / 36e5)), mm = pad(Math.floor(r / 6e4) % 60), ss = pad(Math.floor(r / 1e3) % 60);
-    tog.innerHTML = `з першого вірша минуло<b>${d}</b>${word(d)}<span class="t">${hh}:${mm}:${ss}</span>`;
+    tog.innerHTML = `з першого вірша минуло<b>${d}</b>${word(d)}`;
   };
   const timer = setInterval(tick, 1000); tick();
   // фото проявляються, коли докручуєш до них
