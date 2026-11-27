@@ -155,6 +155,20 @@ body.l-lined .note{line-height:32px;font-size:17px;background:repeating-linear-g
 .pager{display:flex;justify-content:space-between;gap:24px;margin-top:80px;padding-top:24px;border-top:1px solid var(--line);font-size:13px;color:var(--muted)}
 
 .video{aspect-ratio:16/9;background:#111;margin-top:8px}
+body.cinema{background:#14110f;color:#efe6d8}
+.gift{border:0;min-height:100vh;min-height:100svh;text-align:center}
+.hero.gift>.back{position:absolute!important;top:24px;left:24px;color:#efe6d8;opacity:.55;z-index:2}
+.gift .num{color:#efe6d8;opacity:.6}
+.gift h2{margin-top:10px;font:italic 500 clamp(40px,7vw,60px)/1 'Cormorant Garamond',serif;color:#efe6d8}
+.tape{display:block;width:min(420px,88vw);margin:40px auto 0;filter:drop-shadow(0 24px 40px rgba(0,0,0,.55));transition:transform .5s cubic-bezier(.2,.7,.2,1);animation:rise 1.2s .3s cubic-bezier(.2,.7,.2,1) both}
+.tape svg{display:block;width:100%;height:auto}
+.tape:hover{transform:translateY(-6px) rotate(-1deg)}
+.reel{transform-box:fill-box;transform-origin:center}
+.reel use{transform-box:fill-box;transform-origin:center;animation:spin 6s linear infinite}
+.tape:hover .reel use,.tape.play .reel use{animation-duration:1.2s}
+@keyframes spin{to{transform:rotate(360deg)}}
+.hint{margin-top:26px;font:500 26px 'Caveat',cursive;color:#efe6d8;opacity:.7;animation:appear 1s 1.2s both}
+@media(prefers-reduced-motion:reduce){.reel use{animation:none}}
 .video iframe{width:100%;height:100%;border:0;display:block}
 .page.wide{max-width:900px}
 
@@ -196,7 +210,7 @@ window.addEventListener('error', function (e) {
 <script>
 /* Увесь вміст (тексти, вірші, фото) зашифрований паролем і відкривається тільки після нього. */
 let SITE = {}, POEMS = [];
-const LOCKS = ["cFknuHqeshIVb6yCZu/eM9ckQSt/CPe2Kp/lH54rICj3TuuhvXww56OVTrZuLV67Uwv8Zb6F1pm5Ddib33RvQxOL9Kn1ZLMjBUGuRzoTpQ5L9n+qR8dqXw==","9n26xhOWRZREMK9QX8D6JiWK/i+IzaIXEjwfxoXnbnQDv7RrOmbiwcSaVEsMms4uhlHgltHwC09aQm+1tsfSM90dWIMA/ZXKQolJQFpmEFNkDoP9eGim3w==","hC+SFyJT7lTSXKUQwf5f3zuKREgUk5xgOQBw3QtE+oQjTGsHZk5kxi4xLZUzsUnnI98NwueyESMeqX7mIlpU15qyBnNs53gaifNGhctn2yIzpJTSsh97nA=="];
+const LOCKS = ["Uy/V/y06PTM4P7esjqpyCgv33+FmSWc8pVl9yhfF7KcLCrE2lkf+kaNlix35k2HekRR0kbxAwSEe/w+X9QU0Uhs9d5aXX4Ig8wDwM/LMgCaiyjX5ZrgOPA==","IdGcT4EU5OW0ROZwgpaq/rmHwHu8dwgWZM3g3hcsNa4A+TRpIylMwcYgWKO4ZucsQDmTfVZaJKFFfkbRcggkt0lH/JJH6UDazU1/9EjzpOiAa0rtwcmjcw==","eTt6G83ubD8eDZ5oXi2ZXo3nshNA40VwngnM7wDLs5awW4KLj4x1ejmoBCjf7R5XpwvouIQS6iITKD81MeFOkFtEV1Asghc5idHrd7rd/Wwmt5jeROxCuw=="];
 
 
 /* ============ СТИЛІ ВІРШІВ ============
@@ -234,7 +248,7 @@ function loadFonts(list) {
 }
 function applyTheme(t) {
   const b = document.body;
-  b.className = '';
+  b.className = '';  // also clears .cinema
   if (!t) { b.removeAttribute('style'); return; }
   loadFonts(t.fonts);
   const v = { bg:t.bg, fg:t.fg, acc:t.acc, ln:t.ln, fr:t.fr, card:t.card || '#fff', tf:t.tf + ',serif', ts:t.ts, vf:t.vf + ',serif', vs:t.vs, vi:t.vi, vw:t.vw, vl:t.vl };
@@ -368,9 +382,9 @@ function liven() {
 }
 
 /* сердечка, що повільно пливуть угору в шапці */
-function sky(cv, hero) {
+function sky(cv, hero, tint) {
   const ctx = cv.getContext('2d');
-  const color = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim() || '#1f4a38';
+  const color = tint || getComputedStyle(document.documentElement).getPropertyValue('--accent').trim() || '#1f4a38';
   let W = 0, H = 0, mx = -999, my = -999;
   const size = () => {
     const dpr = Math.min(devicePixelRatio || 1, 2);
@@ -421,7 +435,7 @@ function hearts(x, y, n = 7, spread = 70, dur = 1) {
     setTimeout(() => h.remove(), dur * 1400);
   }
 }
-if (!calm) addEventListener('pointerdown', e => {
+if (!calm) addEventListener('click', e => {
   if (e.target.closest('input,button,iframe,textarea')) return;
   hearts(e.clientX, e.clientY);
 });
@@ -481,20 +495,48 @@ function poem(i) {
 function gift() {
   if (!unlocked) { location.hash = '#/'; return; }
   applyTheme(null);
+  document.body.classList.add('cinema');
+  const url = 'https://youtu.be/' + encodeURIComponent(unlocked);
   app.innerHTML = `
-  <div class="wrap">
+  <section class="hero gift" id="hero">
+    <canvas id="sky"></canvas>
     <a class="back" href="#/">← назад</a>
-    <section class="page wide fade">
-      <div class="num">для тебе</div>
-      <h2>${esc(SITE.giftTitle)}</h2>
-      <div class="video">
-        <iframe src="https://www.youtube-nocookie.com/embed/${esc(unlocked)}?rel=0&playsinline=1"
-          allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>
-      </div>
-      <a class="back" href="https://youtu.be/${esc(unlocked)}" target="_blank" rel="noopener">відкрити на YouTube</a>
-    </section>
-  </div>`;
+    <div class="num">для тебе</div>
+    <h2>${esc(SITE.giftTitle)}</h2>
+    <a class="tape" id="tape" href="${url}" target="_blank" rel="noopener" aria-label="відкрити відео">
+      <svg viewBox="0 0 400 256" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="tb" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3a302a"/><stop offset="1" stop-color="#241d19"/></linearGradient>
+          <linearGradient id="tl" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f6ecd9"/><stop offset="1" stop-color="#eadbbf"/></linearGradient>
+          <g id="reel"><circle r="27" fill="#f3ead8"/><circle r="27" fill="none" stroke="#c9b896" stroke-width="2"/>
+            <g fill="#241d19"><rect x="-3" y="-21" width="6" height="11" rx="2"/><rect x="-3" y="-21" width="6" height="11" rx="2" transform="rotate(60)"/><rect x="-3" y="-21" width="6" height="11" rx="2" transform="rotate(120)"/><rect x="-3" y="-21" width="6" height="11" rx="2" transform="rotate(180)"/><rect x="-3" y="-21" width="6" height="11" rx="2" transform="rotate(240)"/><rect x="-3" y="-21" width="6" height="11" rx="2" transform="rotate(300)"/></g>
+            <circle r="6" fill="#241d19"/></g>
+        </defs>
+        <rect x="4" y="4" width="392" height="248" rx="16" fill="url(#tb)"/>
+        <rect x="4" y="4" width="392" height="248" rx="16" fill="none" stroke="#000" stroke-opacity=".35"/>
+        <g fill="#15110e">${[[20,20],[380,20],[20,236],[380,236],[200,236]].map(([x,y]) => `<circle cx="${x}" cy="${y}" r="5"/>`).join('')}</g>
+        <rect x="30" y="26" width="340" height="150" rx="8" fill="url(#tl)"/>
+        <rect x="30" y="26" width="340" height="30" rx="8" fill="var(--accent)"/>
+        <rect x="30" y="44" width="340" height="12" fill="var(--accent)"/>
+        <text x="48" y="47" font-family="Manrope,sans-serif" font-size="13" font-weight="600" letter-spacing="3" fill="#f6ecd9">A</text>
+        <text x="352" y="47" text-anchor="end" font-family="Manrope,sans-serif" font-size="11" letter-spacing="2" fill="#f6ecd9">27 · 11 · 2026</text>
+        <text x="200" y="86" text-anchor="middle" font-family="Caveat,cursive" font-size="30" fill="#2b2522">для моєї Коханої</text>
+        <line x1="60" y1="96" x2="340" y2="96" stroke="#c9b896"/>
+        <rect x="92" y="108" width="216" height="56" rx="28" fill="#1a1512"/>
+        <rect x="150" y="118" width="100" height="36" rx="4" fill="#3b2a20" opacity=".9"/>
+        <path d="M150 136 Q200 126 250 136" stroke="#6b4a36" stroke-width="10" fill="none" opacity=".7"/>
+        <g class="reel r1" transform="translate(130 136)"><use href="#reel"/></g>
+        <g class="reel r2" transform="translate(270 136)"><use href="#reel"/></g>
+        <path d="M92 252 L112 196 L288 196 L308 252 Z" fill="#1d1714"/>
+        <g fill="#0f0c0a"><circle cx="150" cy="226" r="7"/><circle cx="250" cy="226" r="7"/><rect x="186" y="214" width="28" height="22" rx="3"/></g>
+      </svg>
+    </a>
+    <div class="hint">натисни на касету ▶</div>
+  </section>`;
   scrollTo(0, 0);
+  if (!calm) sky(document.getElementById('sky'), document.getElementById('hero'), '#e8a0a8');
+  const tape = document.getElementById('tape');
+  tape.addEventListener('click', () => tape.classList.add('play'));
 }
 
 function setup() {
